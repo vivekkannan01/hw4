@@ -1,7 +1,11 @@
 class PlacesController < ApplicationController
 
   def index
-    @places = Place.where({ "user_id" => @current_user["id"] })
+    if @current_user
+      @places = Place.where({ "user_id" => @current_user["id"] })
+    else
+      redirect_to "/login", notice: "Please log in to continue."
+    end
   end
 
   def show
