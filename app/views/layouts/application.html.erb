@@ -2,30 +2,65 @@
 <html lang="en">
 
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <title>Travel Journal</title>
+    <title>My Travel Journal</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Testing with Google Font (brand name only) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Your custom CSS -->
     <link rel="stylesheet" href="/stylesheets/application.css">
   </head>
 
   <body>
-    <div>
-      <%= flash["notice"] %>
-    </div>
-    <div>
-      <% if @current_user %>
-        <a href="/places">Home</a>
-        <a href="/logout">Logout</a>
-      <% else %>
-        <a href="/login">Login</a>
-        <a href="/users/new">Signup</a>
-      <% end %>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <!-- Brand name using Google Font -->
+        <a class="navbar-brand fs-2 fw-bold" href="/" style="font-family: 'Playfair Display', serif;">
+          My Travel Journal
+        </a>
 
-    <%= yield %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarUserMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarUserMenu">
+          <% if @current_user %>
+            <div class="d-flex align-items-center">
+              <span class="me-3">Logged in as: <strong><%= @current_user["username"] %></strong></span>
+              <a class="btn btn-outline-secondary btn-sm" href="/logout">Logout</a>
+            </div>
+          <% else %>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/users/new">Signup</a>
+              </li>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <% if flash["notice"] %>
+        <div class="alert alert-info">
+          <%= flash["notice"] %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>
